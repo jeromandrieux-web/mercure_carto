@@ -6,6 +6,9 @@
     <title>Cartographie Mercure - Fiches réflexes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* =========================================================
+           1. VARIABLES & RESET
+           ========================================================= */
         :root {
             --primary: #1a3a5c;
             --primary-soft: #245987;
@@ -21,18 +24,23 @@
             --card-bg: #ffffff;
             --line: #d8e2ea;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+        html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
         body {
             background: #eef1f5;
             color: #27313a;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
         }
+
+        /* =========================================================
+           2. LAYOUT
+           ========================================================= */
         .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
         header {
-            background:
-                linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 46%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 46%, var(--secondary) 100%);
             color: white;
             padding: 30px;
             border-radius: 12px;
@@ -44,15 +52,44 @@
             gap: 24px;
             border-bottom: 4px solid var(--secondary-soft);
         }
+
+        .header-content { min-width: 0; }
         .logo { display: flex; align-items: center; min-width: 260px; }
         .logo-icon { font-size: 40px; margin-right: 18px; }
         .logo-text { font-size: 30px; font-weight: 800; letter-spacing: .2px; word-break: break-word; overflow-wrap: break-word; }
         .header-content h1 { font-size: 26px; margin-bottom: 4px; }
-        .header-content { min-width: 0; }
         .author-line { font-size: 15px; opacity: .95; margin-bottom: 8px; }
         .header-content p { font-size: 15px; opacity: .92; max-width: 720px; }
+
+        /* Bouton retour en haut */
+        #back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0,0,0,.25);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            z-index: 999;
+            transition: opacity .25s ease, transform .25s ease;
+        }
+        #back-to-top:hover { transform: translateY(-3px); background: var(--primary-soft); }
+        #back-to-top.visible { display: flex; }
+
+        /* =========================================================
+           3. NAVIGATION & ONGLETS
+           ========================================================= */
         .tabs-container { display: block; margin-bottom: 20px; }
         button { font: inherit; }
+
         .intro-tab, .sub-tab {
             padding: 12px 18px;
             background: white;
@@ -73,6 +110,7 @@
         .intro-tab i, .sub-tab i { margin-right: 8px; font-size: 14px; }
         .intro-tab:hover, .sub-tab:hover { background: var(--primary-soft); color: white; transform: translateY(-2px); }
         .intro-tab.active, .sub-tab.active { background: var(--primary); color: white; border-color: var(--secondary-soft); }
+
         .tab-group { margin-bottom: 10px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
         .group-header {
             padding: 12px 18px;
@@ -91,17 +129,13 @@
         .group-header i:first-child { margin-right: 10px; }
         .group-header .chevron { transition: transform .25s ease; font-size: 12px; }
         .group-header.expanded .chevron { transform: rotate(180deg); }
-        .sub-tabs {
-            display: none;
-            padding: 10px;
-            gap: 8px;
-            flex-wrap: wrap;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-top: none;
-            border-radius: 0 0 8px 8px;
-        }
+
+        .sub-tabs { display: none; padding: 10px; gap: 8px; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; }
         .sub-tabs.open { display: flex; }
+
+        /* =========================================================
+           4. CONTENU DES FICHES
+           ========================================================= */
         .content {
             display: none;
             background: white;
@@ -111,21 +145,7 @@
             margin-bottom: 25px;
         }
         .content.active { display: block; animation: fadeIn .35s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        h2 {
-            color: var(--primary);
-            font-size: 28px;
-            margin-bottom: 22px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--secondary);
-        }
-        h2 i { margin-right: 12px; color: var(--secondary); }
-        h2 span { font-size: .78em; color: var(--secondary); font-weight: 650; }
-        h3 { color: var(--primary); margin: 22px 0 12px; font-size: 20px; }
-        .section-title { border-left: 4px solid var(--accent); padding-left: 10px; }
-        p { margin-bottom: 12px; }
-        ul, ol { margin-left: 22px; margin-bottom: 16px; }
-        li { margin-bottom: 8px; }
+
         .intro-card, .mode-emploi, .card-objectif, .card-reflexes, .callout {
             border-radius: 8px;
             padding: 18px;
@@ -138,12 +158,27 @@
         .card-reflexes { background: #f8fafc; border-left-color: var(--primary); }
         .callout { background: #fff7ed; border-left-color: var(--accent); }
         .callout strong { color: var(--primary); display: block; margin-bottom: 6px; }
+
+        /* =========================================================
+           5. TYPOGRAPHIE
+           ========================================================= */
+        h2 { color: var(--primary); font-size: 28px; margin-bottom: 22px; padding-bottom: 12px; border-bottom: 3px solid var(--secondary); }
+        h2 i { margin-right: 12px; color: var(--secondary); }
+        h2 span { font-size: .78em; color: var(--secondary); font-weight: 650; }
+        h3 { color: var(--primary); margin: 22px 0 12px; font-size: 20px; }
+        .section-title { border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin-bottom: 12px; }
+        ul, ol { margin-left: 22px; margin-bottom: 16px; }
+        li { margin-bottom: 8px; }
         .summary-list { columns: 2; column-gap: 34px; }
-        .kv-grid {
-            display: grid;
-            gap: 10px;
-            margin: 16px 0 20px;
-        }
+        .summary-list li { break-inside: avoid; }
+        .summary-list a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .summary-list a:hover { text-decoration: underline; color: var(--primary-soft); }
+
+        /* =========================================================
+           6. COMPOSANTS (tableaux, grilles, schémas)
+           ========================================================= */
+        .kv-grid { display: grid; gap: 10px; margin: 16px 0 20px; }
         .kv-row {
             display: grid;
             grid-template-columns: 210px 1fr;
@@ -155,21 +190,20 @@
         }
         .kv-key { background: #edf3f8; color: var(--primary); font-weight: 800; padding: 12px; }
         .kv-value { padding: 12px; }
-        .table-wrap { overflow-x: auto; margin: 16px 0 22px; border-radius: 8px; border: 1px solid var(--line); }
+
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0 22px; border-radius: 8px; border: 1px solid var(--line); }
         table { width: 100%; border-collapse: collapse; min-width: 680px; }
         th { background: var(--primary); color: white; text-align: left; padding: 12px; font-size: 14px; }
         td { padding: 11px 12px; border-top: 1px solid var(--line); vertical-align: top; }
         tr:nth-child(even) td { background: #f8fafc; }
-        .schema-block {
-            margin: 22px 0;
-            padding: 16px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            background: #fbfdff;
-        }
+
+        .schema-block { margin: 22px 0; padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: #fbfdff; }
         .schema-block img { width: 100%; height: auto; display: block; border-radius: 6px; }
         figcaption { margin-top: 10px; color: var(--primary); font-weight: 700; font-size: 14px; }
-        /* ========== RESPONSIVE ========== */
+
+        /* =========================================================
+           7. RESPONSIVE
+           ========================================================= */
         @media (max-width: 992px) {
             .container { padding: 16px; }
             header { flex-wrap: wrap; gap: 16px; }
@@ -179,6 +213,7 @@
             .group-header { border-radius: 8px; }
             table { min-width: 540px; }
         }
+
         @media (max-width: 768px) {
             .container { padding: 12px; }
             header { flex-direction: column; align-items: flex-start; padding: 22px; }
@@ -194,10 +229,14 @@
             .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .schema-block { padding: 12px; }
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="container">
+
+        <!-- ========== HEADER ========== -->
         <header>
             <div class="logo">
                 <i class="fas fa-map-marked-alt logo-icon"></i>
@@ -209,58 +248,349 @@
                 <p>Interface de consultation rapide pour les fondamentaux de la cartographie Mercures.</p>
             </div>
         </header>
+
+        <!-- ========== NAVIGATION PAR ONGLETS ========== -->
         <nav class="tabs-container">
             <button class="intro-tab active" onclick="showTab(0)"><i class="fas fa-home"></i> Introduction</button>
-            <div class="tab-group"><button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-compass"></i> Cadrer la carte</span><i class="fas fa-chevron-down chevron"></i></button><div class="sub-tabs"><button class="sub-tab" onclick="showTab(1)"><i class="fas fa-route"></i> Fiche 01</button><button class="sub-tab" onclick="showTab(2)"><i class="fas fa-layer-group"></i> Fiche 02</button><button class="sub-tab" onclick="showTab(3)"><i class="fas fa-check-double"></i> Fiche 03</button><button class="sub-tab" onclick="showTab(4)"><i class="fas fa-map-location-dot"></i> Fiche 04</button></div></div>
-            <div class="tab-group"><button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-location-crosshairs"></i> Localiser</span><i class="fas fa-chevron-down chevron"></i></button><div class="sub-tabs"><button class="sub-tab" onclick="showTab(5)"><i class="fas fa-tower-cell"></i> Fiche 05</button><button class="sub-tab" onclick="showTab(6)"><i class="fas fa-location-dot"></i> Fiche 06</button></div></div>
-            <div class="tab-group"><button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-chart-area"></i> Analyser</span><i class="fas fa-chevron-down chevron"></i></button><div class="sub-tabs"><button class="sub-tab" onclick="showTab(7)"><i class="fas fa-clock"></i> Fiche 07</button><button class="sub-tab" onclick="showTab(8)"><i class="fas fa-map"></i> Fiche 08</button><button class="sub-tab" onclick="showTab(9)"><i class="fas fa-crosshairs"></i> Fiche 09</button><button class="sub-tab" onclick="showTab(10)"><i class="fas fa-fire"></i> Fiche 10</button><button class="sub-tab" onclick="showTab(11)"><i class="fas fa-people-arrows"></i> Fiche 11</button><button class="sub-tab" onclick="showTab(12)"><i class="fas fa-code-branch"></i> Fiche 12</button></div></div>
-            <div class="tab-group"><button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-file-export"></i> Restituer</span><i class="fas fa-chevron-down chevron"></i></button><div class="sub-tabs"><button class="sub-tab" onclick="showTab(13)"><i class="fas fa-file-export"></i> Fiche 13</button></div></div>
+            <div class="tab-group">
+                <button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-compass"></i> Cadrer la carte</span><i class="fas fa-chevron-down chevron"></i></button>
+                <div class="sub-tabs">
+                    <button class="sub-tab" onclick="showTab(1)"><i class="fas fa-route"></i> Fiche 01</button>
+                    <button class="sub-tab" onclick="showTab(2)"><i class="fas fa-layer-group"></i> Fiche 02</button>
+                    <button class="sub-tab" onclick="showTab(3)"><i class="fas fa-check-double"></i> Fiche 03</button>
+                    <button class="sub-tab" onclick="showTab(4)"><i class="fas fa-map-location-dot"></i> Fiche 04</button>
+                </div>
+            </div>
+            <div class="tab-group">
+                <button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-location-crosshairs"></i> Localiser</span><i class="fas fa-chevron-down chevron"></i></button>
+                <div class="sub-tabs">
+                    <button class="sub-tab" onclick="showTab(5)"><i class="fas fa-tower-cell"></i> Fiche 05</button>
+                    <button class="sub-tab" onclick="showTab(6)"><i class="fas fa-location-dot"></i> Fiche 06</button>
+                </div>
+            </div>
+            <div class="tab-group">
+                <button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-chart-area"></i> Analyser</span><i class="fas fa-chevron-down chevron"></i></button>
+                <div class="sub-tabs">
+                    <button class="sub-tab" onclick="showTab(7)"><i class="fas fa-clock"></i> Fiche 07</button>
+                    <button class="sub-tab" onclick="showTab(8)"><i class="fas fa-map"></i> Fiche 08</button>
+                    <button class="sub-tab" onclick="showTab(9)"><i class="fas fa-crosshairs"></i> Fiche 09</button>
+                    <button class="sub-tab" onclick="showTab(10)"><i class="fas fa-fire"></i> Fiche 10</button>
+                    <button class="sub-tab" onclick="showTab(11)"><i class="fas fa-people-arrows"></i> Fiche 11</button>
+                    <button class="sub-tab" onclick="showTab(12)"><i class="fas fa-code-branch"></i> Fiche 12</button>
+                </div>
+            </div>
+            <div class="tab-group">
+                <button class="group-header" onclick="toggleGroup(this)"><span><i class="fas fa-file-export"></i> Restituer</span><i class="fas fa-chevron-down chevron"></i></button>
+                <div class="sub-tabs">
+                    <button class="sub-tab" onclick="showTab(13)"><i class="fas fa-file-export"></i> Fiche 13</button>
+                </div>
+            </div>
         </nav>
-        <section class="content active"><h2><i class="fas fa-home"></i> Introduction</h2><div class="intro-card"><p><strong>Fiches réflexes enrichies de schémas</strong><br>Fondamentaux de la cartographie Mercure</p><p>Aide-mémoire à remettre aux personnels formés</p></div><div class="mode-emploi"><h3><i class="fas fa-book-open"></i> Mode d'emploi</h3><p>Chaque fiche résume le réflexe cartographique attendu : partir d'une question, choisir les données utiles, contrôler la précision, lire les résultats, exploiter la timeline et restituer avec prudence.</p></div><h3><i class="fas fa-list-ol"></i> Sommaire des fiches</h3><ul class="summary-list"><li><strong>Fiche 01</strong> - Partir d'une question cartographique</li><li><strong>Fiche 02</strong> - Choisir les données à afficher</li><li><strong>Fiche 03</strong> - Contrôler avant de cartographier</li><li><strong>Fiche 04</strong> - Afficher une sélection sur la carte</li><li><strong>Fiche 05</strong> - Lire une localisation téléphonique</li><li><strong>Fiche 06</strong> - Créer et utiliser les événements d'enquête</li><li><strong>Fiche 07</strong> - Utiliser la timeline avec la carte</li><li><strong>Fiche 08</strong> - Exploiter les couches et fonds de carte</li><li><strong>Fiche 09</strong> - Rechercher dans une zone ou à proximité</li><li><strong>Fiche 10</strong> - Utiliser heat map et agrégation par zone</li><li><strong>Fiche 11</strong> - Chercher les points de rencontre ou d'éloignement</li><li><strong>Fiche 12</strong> - Croiser plusieurs sources</li><li><strong>Fiche 13</strong> - Sauvegarder et restituer les résultats</li></ul><div class="kv-grid"><div class="kv-row"><div class="kv-key">Public</div><div class="kv-value">Personnels formés à l'utilisation de Mercure, ayant déjà vu les bases de l'environnement, des imports et des représentations.</div></div><div class="kv-row"><div class="kv-key">But</div><div class="kv-value">Donner des réflexes courts pour exploiter, lire et restituer une carte Mercure sans revenir au cours complet.</div></div><div class="kv-row"><div class="kv-key">Périmètre</div><div class="kv-value">Cartographie, localisations, couches, données sources, requêtes métier, analyse temporelle, timeline et restitution.</div></div><div class="kv-row"><div class="kv-key">Principe</div><div class="kv-value">Une carte Mercure sert à poser les bonnes questions : où, qui, quand dans la zone, avec quelle précision et avec quelles limites ?</div></div></div>
-<div class="callout"><strong>Réflexe général</strong><p>Ne jamais présenter une carte comme une preuve isolée. Elle oriente, recoupe, révèle des zones d'intérêt et doit être relue avec les données source.</p></div></section><section class="content"><h2><i class="fas fa-route"></i> FICHE RÉFLEXE 01<br><span>Partir d&#x27;une question cartographique</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La carte n&#x27;est pas une image finale : c&#x27;est un outil d&#x27;investigation.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Transformer une masse de données en questions exploitables : concentration, dispersion, proximité, anomalie, présence dans une zone.</div></div><div class="kv-row"><div class="kv-key">Quand l&#x27;utiliser</div><div class="kv-value">Dès qu&#x27;une analyse comporte une dimension géographique : faits, relais, LAPI, événements, extractions, retraits, positions GPS.</div></div><div class="kv-row"><div class="kv-key">Question réflexe</div><div class="kv-value">Qu&#x27;est-ce que je cherche à savoir : où était ce numéro ? Qui était dans cette zone ? Quels lieux reviennent ? Quels éléments sont proches ?</div></div></div>
-<h3 class="section-title">Mode opératoire</h3>
-<div class="card-reflexes"><ol><li>Identifier l&#x27;objet de l&#x27;analyse : numéro, IMEI, IMSI, relais, immatriculation, événement ou groupe.</li><li>Définir le périmètre : procédure, réquisition, zone géographique, période utile, type de données.</li><li>Afficher une sélection limitée pour éviter la saturation visuelle.</li><li>Ajouter les couches utiles progressivement : relais, événements, LAPI, extractions, autres sources.</li><li>Revenir aux lignes source pour confirmer ce que la carte suggère.</li></ol></div>
-<div class="callout"><strong>À retenir</strong><p>La carte répond d&#x27;abord à des questions de localisation et de proximité. Elle ne remplace ni le contrôle des données ni l&#x27;analyse relationnelle.</p></div></section><section class="content"><h2><i class="fas fa-layer-group"></i> FICHE RÉFLEXE 02<br><span>Choisir les données à afficher</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Toutes les données ne portent pas la même question d&#x27;enquête.</p></div><div class="table-wrap"><table><thead><tr><th>Donnée</th><th>Question utile</th><th>Vigilance</th></tr></thead><tbody><tr><td>FADT MSISDN</td><td>Où était ce numéro ou ce terminal ?</td><td>Suivre un objectif connu ; vérifier MSISDN, IMSI, IMEI, sens et relais.</td></tr><tr><td>FADT cellulaire / BTS</td><td>Qui était dans cette zone ?</td><td>Volume important ; isoler une zone et une plage utile avant d&#x27;interpréter.</td></tr><tr><td>Relais</td><td>Quelle antenne, quel secteur, quelle couverture ?</td><td>Point d&#x27;antenne, azimut et rayon ne donnent pas une adresse certaine.</td></tr><tr><td>Événements d&#x27;enquête</td><td>Où situer faits, caméras, perquisitions, témoignages ?</td><td>Vérifier le géocodage ou placer manuellement si l&#x27;adresse est approximative.</td></tr><tr><td>LAPI / immat.</td><td>Quel véhicule passe à quel point ?</td><td>Ne pas déduire automatiquement conducteur, trajet complet ou présence personnelle.</td></tr><tr><td>Extraction / GPS / bancaire</td><td>Quelle source confirme ou nuance la localisation ?</td><td>Différencier précision GPS, transaction, adresse, caméra et BTS.</td></tr></tbody></table></div>
-<div class="callout"><strong>Réflexe</strong><p>Choisir la donnée selon la question : suspect connu -&gt; FADT MSISDN ; zone de fait -&gt; FADT BTS ; véhicule -&gt; LAPI ; lieu d&#x27;enquête -&gt; événement.</p></div></section><section class="content"><h2><i class="fas fa-check-double"></i> FICHE RÉFLEXE 03<br><span>Contrôler avant de cartographier</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Une carte construite sur une donnée mal importée produit une mauvaise lecture.</p></div><h3 class="section-title">Checklist de contrôle</h3>
-<div class="card-reflexes"><ul><li>Dates et heures lisibles, formats cohérents, fuseau horaire compris.</li><li>Doublons techniques identifiés ou supprimés si nécessaire.</li><li>Numéros ambigus, MSISDN, IMSI et IMEI contrôlés.</li><li>Relais importés, reconnus et géolocalisés.</li><li>Adresses d&#x27;événements géocodées ou repositionnées manuellement.</li><li>Type de donnée clairement identifié : appel, SMS, data, bornage, LAPI, événement, GPS.</li><li>Nommage explicite des dossiers, sous-dossiers, réquisitions et listes de résultats.</li></ul></div>
-<div class="table-wrap"><table><thead><tr><th>Erreur fréquente</th><th>Effet sur la carte</th><th>Correction</th></tr></thead><tbody><tr><td>Date mal interprétée</td><td>Présence affichée au mauvais moment.</td><td>Reprendre l&#x27;import ou le mapping de date.</td></tr><tr><td>Relais inconnu</td><td>Événement absent ou mal localisé.</td><td>Importer/gérer les relais depuis le bon menu.</td></tr><tr><td>Adresse approximative</td><td>Point d&#x27;enquête mal positionné.</td><td>Vérifier sur fond de carte ou positionner manuellement.</td></tr><tr><td>Doublon technique</td><td>Densité artificiellement gonflée.</td><td>Auditer puis supprimer ou neutraliser les doublons.</td></tr></tbody></table></div></section><section class="content"><h2><i class="fas fa-map-location-dot"></i> FICHE RÉFLEXE 04<br><span>Afficher une sélection sur la carte</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La carte se construit à partir d&#x27;une sélection, pas en déversant tout le dossier.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Point d&#x27;entrée</div><div class="kv-value">Feuille de résultat, menu contextuel, menu pop-up ou représentation cartographique selon l&#x27;objet sélectionné.</div></div><div class="kv-row"><div class="kv-key">Sélection type</div><div class="kv-value">Un numéro, une réquisition, plusieurs réquisitions, un relais, une liste, des événements ou des lignes de résultat.</div></div><div class="kv-row"><div class="kv-key">But</div><div class="kv-value">Obtenir une vue lisible pour comprendre les zones, puis enrichir l&#x27;affichage par couches successives.</div></div></div>
-<h3 class="section-title">Étapes réflexes</h3>
-<div class="card-reflexes"><ol><li>Sélectionner l&#x27;objet à cartographier.</li><li>Afficher sur la carte ou lancer la représentation cartographique adaptée.</li><li>Vérifier le fond de carte et les couches visibles.</li><li>Cliquer sur quelques points pour comparer la fiche détaillée avec les lignes source.</li><li>Ajouter seulement les données nécessaires au raisonnement.</li></ol></div>
-<div class="callout"><strong>À éviter</strong><p>Afficher tout le dossier d&#x27;un coup : la carte devient illisible et favorise les conclusions rapides mais fragiles.</p></div></section><section class="content"><h2><i class="fas fa-tower-cell"></i> FICHE RÉFLEXE 05<br><span>Lire une localisation téléphonique</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>BTS ne veut pas dire position exacte.</p></div><div class="table-wrap"><table><thead><tr><th>Élément affiché</th><th>Lecture correcte</th><th>Formulation prudente</th></tr></thead><tbody><tr><td>Point antenne</td><td>Antenne rattachée à l&#x27;événement.</td><td>Le terminal est raccordé à cette BTS.</td></tr><tr><td>Secteur / azimut</td><td>Direction théorique de couverture.</td><td>La présence est compatible avec le secteur couvert.</td></tr><tr><td>Rayon estimé</td><td>Zone approximative, variable selon le contexte.</td><td>Le terminal se situe dans une zone de couverture estimée.</td></tr><tr><td>Milieu urbain</td><td>Précision souvent meilleure mais jamais absolue.</td><td>La localisation reste une zone, pas une adresse.</td></tr><tr><td>Milieu rural</td><td>Couverture potentiellement très large.</td><td>La BTS indique un secteur large, à relativiser fortement.</td></tr></tbody></table></div>
-<h3 class="section-title">Vigilances</h3>
-<div class="card-reflexes"><ul><li>Ne pas confondre BTS, GPS, LAPI et adresse d&#x27;événement.</li><li>Vérifier le secteur de couverture, pas seulement le point d&#x27;antenne.</li><li>Tenir compte du relief, de la densité urbaine, du réseau et du type d&#x27;événement.</li><li>Ne jamais conclure seul à la présence physique d&#x27;une personne à une adresse précise.</li></ul></div>
-<div class="callout"><strong>Phrase utile</strong><p>Dire : &#x27;le terminal borne sur la BTS couvrant le secteur...&#x27; plutôt que : &#x27;la personne est à cet endroit&#x27;.</p></div></section><section class="content"><h2><i class="fas fa-location-dot"></i> FICHE RÉFLEXE 06<br><span>Créer et utiliser les événements d&#x27;enquête</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Les faits d&#x27;enquête donnent des repères à la carte.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Événements utiles</div><div class="kv-value">Fait principal, lieu de découverte, caméra, perquisition, observation, contrôle, témoignage localisé, point LAPI connu.</div></div><div class="kv-row"><div class="kv-key">Création</div><div class="kv-value">Création manuelle ou import selon le cas ; géocodage automatique si adresse exploitable, positionnement manuel si besoin.</div></div><div class="kv-row"><div class="kv-key">Intérêt</div><div class="kv-value">Comparer le fait et les données techniques dans une même vue : proximité, cohérence, zone à vérifier.</div></div></div>
-<h3 class="section-title">Réflexe d&#x27;utilisation</h3>
-<div class="card-reflexes"><ol><li>Nommer l&#x27;événement de manière explicite : nature, date, heure ou contexte.</li><li>Vérifier le point sur le fond de carte le plus adapté.</li><li>Distinguer visuellement les événements d&#x27;enquête des données téléphoniques.</li><li>Utiliser l&#x27;événement comme point de départ d&#x27;une recherche à proximité.</li></ol></div>
-<div class="callout"><strong>Contrôle</strong><p>Un événement mal placé peut déformer toute l&#x27;analyse de proximité. La vérification visuelle du point est indispensable.</p></div></section><section class="content"><h2><i class="fas fa-clock"></i> FICHE RÉFLEXE 07<br><span>Utiliser la timeline avec la carte</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La timeline donne une lecture temporelle à ce que la carte localise.</p></div>
-<div class="kv-grid"><div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Relier les événements cartographiques à leur ordre chronologique pour comprendre quand une présence, un mouvement ou une concentration apparaît.</div></div><div class="kv-row"><div class="kv-key">Quand l'utiliser</div><div class="kv-value">Dès que l'analyse dépend d'une période, d'une plage horaire, d'un enchaînement d'événements ou d'une comparaison avant / pendant / après le fait.</div></div><div class="kv-row"><div class="kv-key">Principe</div><div class="kv-value">La timeline fonctionne en miroir de la carte : sélectionner une période met à jour l'affichage cartographique, et cliquer sur un événement de la carte permet de le repositionner dans la chronologie.</div></div></div>
-<h3 class="section-title">Étapes réflexes</h3>
-<div class="card-reflexes"><ol><li>Afficher d'abord une vue cartographique lisible : sources utiles, couches nécessaires et période globale contrôlée.</li><li>Ouvrir la timeline ou la chronologie associée à la vue.</li><li>Resserrer progressivement la fenêtre temporelle : toute la période, journée utile, heures autour du fait, puis créneau précis.</li><li>Observer ce qui disparaît, ce qui reste et ce qui se concentre sur la carte.</li><li>Comparer les points conservés avec le tableau de résultats pour vérifier les lignes source.</li><li>Sauvegarder la sélection ou les critères de filtre si le résultat doit être restitué.</li></ol></div>
-<div class="callout"><strong>Requêtes croisées</strong><p>Carte, tableau et chronologie doivent être lus ensemble : filtrer sur la carte, vérifier les lignes dans le tableau, puis resserrer la plage horaire pour confirmer la cohérence temporelle.</p></div>
-<h3 class="section-title">Exemples d'usage</h3>
-<div class="card-reflexes"><ul><li>Isoler les numéros présents entre 02h et 03h autour d'une BTS couvrant le lieu du fait.</li><li>Repérer si un cluster cartographique correspond à un rassemblement sur une plage horaire précise.</li><li>Comparer les appels d'un suspect avec la chronologie des événements et les autres sources géolocalisées.</li></ul></div>
-<h3 class="section-title">Vigilances</h3>
-<div class="card-reflexes"><ul><li>Contrôler les dates, heures, formats et fuseaux horaires avant toute conclusion.</li><li>Ne pas confondre simultanéité technique et présence physique certaine.</li><li>Documenter les filtres temporels appliqués pour que l'analyse soit reproductible.</li></ul></div>
-<div class="callout"><strong>Formulation prudente</strong><p>Dire : 'sur cette plage horaire, les données affichées se concentrent dans ce secteur' plutôt que : 'les personnes étaient ensemble à cet endroit'.</p></div>
-<div class="callout"><strong>Dernier réflexe</strong><p>Une carte dit où ; la timeline aide à comprendre quand. Les deux lectures doivent rester liées aux données source.</p></div></section><section class="content"><h2><i class="fas fa-map"></i> FICHE RÉFLEXE 08<br><span>Exploiter les couches et fonds de carte</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Le fond de carte influence ce que l&#x27;on comprend.</p></div><div class="table-wrap"><table><thead><tr><th>Choix</th><th>Utilisation</th><th>Ce que cela apporte</th></tr></thead><tbody><tr><td>OpenStreetMap</td><td>Lecture des rues, quartiers, axes, adresses.</td><td>Très lisible pour expliquer un secteur.</td></tr><tr><td>Satellite</td><td>Lecture physique des lieux : parkings, friches, bâtiments, terrains.</td><td>Utile pour qualifier le contexte concret.</td></tr><tr><td>Relais / secteurs</td><td>Lecture technique des BTS et couvertures.</td><td>Indispensable pour interpréter les localisations télécoms.</td></tr><tr><td>Événements</td><td>Repères judiciaires ou opérationnels.</td><td>Permet de relier la donnée technique au dossier.</td></tr><tr><td>LAPI / immat.</td><td>Points caméra et passages véhicules.</td><td>Ajoute une lecture véhicule à la carte.</td></tr></tbody></table></div>
-<div class="callout"><strong>Bon réflexe</strong><p>Changer de fond de carte quand l&#x27;interprétation du lieu le justifie.</p><p>Afficher les couches une par une pour garder une lecture claire.</p><p>Conserver la lisibilité : couleurs distinctes, couches utiles, pas de surcharge.</p></div></section><section class="content"><h2><i class="fas fa-crosshairs"></i> FICHE RÉFLEXE 09<br><span>Rechercher dans une zone ou à proximité</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Partir d&#x27;un point ou d&#x27;un secteur pour trouver les éléments proches.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Question</div><div class="kv-value">Quels éléments de la procédure sont proches de ce lieu, de ce relais, de cette caméra, de cette adresse ou de cette zone ?</div></div><div class="kv-row"><div class="kv-key">Objets recherchés</div><div class="kv-value">Téléphonie, événements, identités, relais, immatriculations, LAPI ou autres données géolocalisées selon le dossier.</div></div><div class="kv-row"><div class="kv-key">Usage typique</div><div class="kv-value">Lieu de fait, caméra, point de passage, zone de rendez-vous probable, secteur d&#x27;activité inhabituel.</div></div></div>
-<h3 class="section-title">Étapes</h3>
-<div class="card-reflexes"><ol><li>Choisir le point de départ : événement, sélection sur carte, relais, LAPI ou adresse.</li><li>Définir une distance cohérente avec le contexte.</li><li>Lancer la recherche à proximité.</li><li>Classer les résultats : connus, inconnus, récurrents, atypiques, à vérifier.</li><li>Sauvegarder les résultats intéressants dans une liste ou une réquisition de résultat.</li></ol></div>
-<div class="callout"><strong>Point de vigilance</strong><p>La distance choisie doit être justifiable : elle n&#x27;a pas le même sens en centre-ville, zone rurale, autoroute ou secteur dense en BTS.</p></div></section><section class="content"><h2><i class="fas fa-fire"></i> FICHE RÉFLEXE 10<br><span>Utiliser heat map et agrégation par zone</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Faire ressortir les zones d&#x27;activité sans lire chaque ligne.</p></div><div class="table-wrap"><table><thead><tr><th>Fonction</th><th>Question</th><th>Lecture</th></tr></thead><tbody><tr><td>Heat map</td><td>Où l&#x27;activité est-elle la plus dense ?</td><td>Zones de vie, travail, passage, stationnement ou anomalie.</td></tr><tr><td>Agrégation par zone</td><td>Quels secteurs concentrent les événements ?</td><td>Comparaison plus structurée entre zones.</td></tr><tr><td>Fréquences</td><td>Quels relais, numéros ou zones reviennent le plus ?</td><td>Distinguer habitude, passage isolé et comportement atypique.</td></tr></tbody></table></div>
-<h3 class="section-title">À utiliser pour</h3>
-<div class="card-reflexes"><ul><li>Étudier les habitudes géographiques d&#x27;une victime, d&#x27;un suspect ou d&#x27;un groupe.</li><li>Repérer une zone inhabituelle par rapport au profil habituel.</li><li>Identifier des secteurs utiles pour vidéosurveillance, LAPI, témoignages ou surveillances.</li><li>Comparer plusieurs réquisitions ou ensembles de réquisitions.</li></ul></div>
-<div class="callout"><strong>Formulation</strong><p>Une zone chaude indique une densité d&#x27;activité dans les données affichées. Elle suggère un centre d&#x27;intérêt ; elle ne prouve pas à elle seule un domicile ou un lieu de travail.</p></div></section><section class="content"><h2><i class="fas fa-people-arrows"></i> FICHE RÉFLEXE 11<br><span>Chercher les points de rencontre ou d&#x27;éloignement</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Comparer des réquisitions dans l&#x27;espace, avec une contrainte de proximité.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Déterminer si des éléments de plusieurs réquisitions ont pu se trouver au même endroit ou dans des endroits différents selon une distance définie.</div></div><div class="kv-row"><div class="kv-key">Fonction simple</div><div class="kv-value">Comparer deux ou plusieurs réquisitions ; résultat centre sur le meilleur point.</div></div><div class="kv-row"><div class="kv-key">Fonction avancée</div><div class="kv-value">Comparer des ensembles de réquisitions, prendre en compte le rôle et obtenir tous les points ou les meilleurs points.</div></div></div>
-<h3 class="section-title">Paramètres à expliciter</h3>
-<div class="card-reflexes"><ul><li>Réquisitions ou ensembles comparés.</li><li>Distance inférieure à... pour une hypothèse de rencontre.</li><li>Distance supérieure à... pour une hypothèse d&#x27;éloignement.</li><li>Rôle éventuel : abonné, correspondant ou autre selon la donnée.</li><li>Type de résultat : tous les points ou meilleurs points.</li></ul></div>
-<div class="callout"><strong>Restitution prudente</strong><p>Un point de rencontre indique une compatibilité géographique entre données. Il doit être recoupé avec les appels, les identités, les événements et les autres sources.</p></div></section><section class="content"><h2><i class="fas fa-code-branch"></i> FICHE RÉFLEXE 12<br><span>Croiser plusieurs sources</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La force de Mercure vient de la superposition des données.</p></div><div class="table-wrap"><table><thead><tr><th>Croisement</th><th>Intérêt</th><th>Question à poser</th></tr></thead><tbody><tr><td>FADT MSISDN + FADT BTS</td><td>Mettre un suspect connu dans la masse des présents.</td><td>Le numéro connu apparaît-il dans la zone utile ?</td></tr><tr><td>Téléphonie + événement</td><td>Comparer un fait et un rattachement télécom.</td><td>La présence technique est-elle compatible avec le lieu ?</td></tr><tr><td>Téléphonie + LAPI</td><td>Recouper terminal et véhicule.</td><td>Le passage véhicule et le bornage se renforcent-ils ?</td></tr><tr><td>Téléphonie + extraction</td><td>Élargir aux contacts et données du terminal.</td><td>Des numéros inconnus ressortent-ils dans la même zone ?</td></tr><tr><td>Carte + graphe</td><td>Passer de la zone au réseau.</td><td>Les présents dans la zone sont-ils en lien entre eux ?</td></tr></tbody></table></div>
-<h3 class="section-title">Réflexe d&#x27;analyse</h3>
-<div class="card-reflexes"><ol><li>Superposer peu de sources à la fois.</li><li>Attribuer une couleur ou une lecture claire à chaque source.</li><li>Comparer les points de convergence et les contradictions.</li><li>Documenter le chemin qui a mené au résultat.</li></ol></div></section><section class="content"><h2><i class="fas fa-file-export"></i> FICHE RÉFLEXE 13<br><span>Sauvegarder et restituer les résultats</span></h2><div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Une bonne carte doit pouvoir être expliquée, reproduite et contredite.</p></div><div class="kv-grid"><div class="kv-row"><div class="kv-key">Sauvegarder des identifiants</div><div class="kv-value">Créer une liste dans un dossier de résultats d&#x27;analyse ; nommer clairement la liste.</div></div><div class="kv-row"><div class="kv-key">Sauvegarder des lignes</div><div class="kv-value">Créer une réquisition de résultat ou copier les lignes utiles selon le type de donnée.</div></div><div class="kv-row"><div class="kv-key">Exporter</div><div class="kv-value">Selon le besoin : rapport, image, tableur, KML, Shapefile ou autre export disponible.</div></div></div>
-<h3 class="section-title">À faire apparaître dans une restitution</h3>
-<div class="card-reflexes"><ul><li>Source des données et réquisitions concernées.</li><li>Zone géographique et distance retenues.</li><li>Filtres appliqués et critères de sélection.</li><li>Mode de représentation utilisé : localisation, recherche à proximité, heat map, agrégation, point de rencontre.</li><li>Niveau de précision : BTS, secteur, rayon, GPS, LAPI, adresse ou événement manuel.</li><li>Limites connues : données manquantes, relais inconnus, doublons, géocodage, numérotation ambiguë.</li></ul></div>
-<div class="kv-grid"><div class="kv-row"><div class="kv-key">Dire</div><div class="kv-value">Ne pas dire</div></div><div class="kv-row"><div class="kv-key">Le terminal est raccordé à la BTS couvrant le secteur.</div><div class="kv-value">La personne était exactement à cette adresse.</div></div><div class="kv-row"><div class="kv-key">Les données font apparaître une zone d&#x27;activité récurrente.</div><div class="kv-value">La carte prouve le domicile.</div></div><div class="kv-row"><div class="kv-key">Les résultats suggèrent une co-présence à vérifier.</div><div class="kv-value">Les personnes étaient ensemble.</div></div><div class="kv-row"><div class="kv-key">Le passage LAPI recoupe la présence télécom dans le secteur.</div><div class="kv-value">Le titulaire conduisait nécessairement le véhicule.</div></div></div>
-<div class="callout"><strong>Dernier réflexe</strong><p>Toujours relier la carte à la donnée source et à une formulation proportionnée au niveau de précision.</p></div></section>
-    </div>
+
+        <!-- =========================================================
+             FICHES - CONTENU
+             ========================================================= -->
+
+        <!-- === FICHE 00 : Introduction === -->
+        <article id="fiche-00" class="content active">
+            <h2><i class="fas fa-home"></i> Introduction</h2>
+            <div class="intro-card">
+                <p><strong>Fiches réflexes enrichies de schémas</strong><br>Fondamentaux de la cartographie Mercure</p>
+                <p>Aide-mémoire à remettre aux personnels formés</p>
+            </div>
+            <div class="mode-emploi">
+                <h3><i class="fas fa-book-open"></i> Mode d'emploi</h3>
+                <p>Chaque fiche résume le réflexe cartographique attendu : partir d'une question, choisir les données utiles, contrôler la précision, lire les résultats, exploiter la timeline et restituer avec prudence.</p>
+            </div>
+
+            <h3><i class="fas fa-list-ol"></i> Sommaire des fiches</h3>
+            <ul class="summary-list">
+                <li><a href="#fiche-01"><strong>Fiche 01</strong> - Partir d'une question cartographique</a></li>
+                <li><a href="#fiche-02"><strong>Fiche 02</strong> - Choisir les données à afficher</a></li>
+                <li><a href="#fiche-03"><strong>Fiche 03</strong> - Contrôler avant de cartographier</a></li>
+                <li><a href="#fiche-04"><strong>Fiche 04</strong> - Afficher une sélection sur la carte</a></li>
+                <li><a href="#fiche-05"><strong>Fiche 05</strong> - Lire une localisation téléphonique</a></li>
+                <li><a href="#fiche-06"><strong>Fiche 06</strong> - Créer et utiliser les événements d'enquête</a></li>
+                <li><a href="#fiche-07"><strong>Fiche 07</strong> - Utiliser la timeline avec la carte</a></li>
+                <li><a href="#fiche-08"><strong>Fiche 08</strong> - Exploiter les couches et fonds de carte</a></li>
+                <li><a href="#fiche-09"><strong>Fiche 09</strong> - Rechercher dans une zone ou à proximité</a></li>
+                <li><a href="#fiche-10"><strong>Fiche 10</strong> - Utiliser heat map et agrégation par zone</a></li>
+                <li><a href="#fiche-11"><strong>Fiche 11</strong> - Chercher les points de rencontre ou d'éloignement</a></li>
+                <li><a href="#fiche-12"><strong>Fiche 12</strong> - Croiser plusieurs sources</a></li>
+                <li><a href="#fiche-13"><strong>Fiche 13</strong> - Sauvegarder et restituer les résultats</a></li>
+            </ul>
+
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Public</div><div class="kv-value">Personnels formés à l'utilisation de Mercure, ayant déjà vu les bases de l'environnement, des imports et des représentations.</div></div>
+                <div class="kv-row"><div class="kv-key">But</div><div class="kv-value">Donner des réflexes courts pour exploiter, lire et restituer une carte Mercure sans revoir la formation complète.</div></div>
+                <div class="kv-row"><div class="kv-key">Format</div><div class="kv-value">13 fiches réflexes + introduction. Chaque fiche contient un objectif, un mode opératoire, une ou plusieurs vigilances.</div></div>
+                <div class="kv-row"><div class="kv-key">Mise à jour</div><div class="kv-value">Dernière mise à jour réalisée à partir de la version actuelle de Mercure ; veiller à croiser avec la documentation officielle.</div></div>
+                <div class="kv-row"><div class="kv-key">Remarque</div><div class="kv-value">Ces fiches ne remplacent pas la documentation officielle. Elles servent d'aide-mémoire et de grille de relecture rapide.</div></div>
+            </div>
+            <div class="callout"><strong>Réflexe général</strong><p>Ne jamais présenter une carte comme une preuve isolée. Elle oriente, recoupe, révèle des zones d'intérêt et doit être relue avec les données source.</p></div>
+        </article>
+
+        <!-- =========================================================
+             CADRER LA CARTE
+             ========================================================= -->
+
+        <!-- === FICHE 01 === -->
+        <article id="fiche-01" class="content">
+            <h2><i class="fas fa-route"></i> FICHE RÉFLEXE 01<br><span>Partir d'une question cartographique</span></h2>
+            <div class="card-objectif">
+                <h3><i class="fas fa-bullseye"></i> Idée clé</h3>
+                <p>La carte n'est pas une image finale : c'est un outil d'investigation.</p>
+            </div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Transformer une masse de données en questions exploitables : concentration, dispersion, proximité, anomalie, présence dans une zone.</div></div>
+                <div class="kv-row"><div class="kv-key">Quand l'utiliser</div><div class="kv-value">Dès qu'une analyse comporte une dimension géographique : faits, relais, LAPI, événements, extractions, retraits, positions GPS.</div></div>
+                <div class="kv-row"><div class="kv-key">Question réflexe</div><div class="kv-value">Qu'est-ce que je cherche à savoir : où était ce numéro ? Qui était dans cette zone ? Quels lieux reviennent ? Quels éléments sont proches ?</div></div>
+            </div>
+            <h3 class="section-title">Mode opératoire</h3>
+            <div class="card-reflexes"><ol><li>Identifier l'objet de l'analyse : numéro, IMEI, IMSI, relais, immatriculation, événement ou groupe.</li><li>Définir le périmètre : procédure, réquisition, zone géographique, période utile, type de données.</li><li>Afficher une sélection limitée pour éviter la saturation visuelle.</li><li>Ajouter les couches utiles progressivement : relais, événements, LAPI, extractions, autres sources.</li><li>Revenir aux lignes source pour confirmer ce que la carte suggère.</li></ol></div>
+            <div class="callout"><strong>À retenir</strong><p>La carte répond d'abord à des questions de localisation et de proximité. Elle ne remplace ni le contrôle des données ni l'analyse relationnelle.</p></div>
+        </article>
+
+        <!-- === FICHE 02 === -->
+        <article id="fiche-02" class="content">
+            <h2><i class="fas fa-layer-group"></i> FICHE RÉFLEXE 02<br><span>Choisir les données à afficher</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Toutes les données ne portent pas la même question d'enquête.</p></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Donnée</th><th>Question utile</th><th>Vigilance</th></tr></thead>
+                    <tbody>
+                        <tr><td>FADT MSISDN</td><td>Où était ce numéro ou ce terminal ?</td><td>Suivre un objectif connu ; vérifier MSISDN, IMSI, IMEI, sens et relais.</td></tr>
+                        <tr><td>FADT cellulaire / BTS</td><td>Qui était dans cette zone ?</td><td>Volume important ; isoler une zone et une plage utile avant d'interpréter.</td></tr>
+                        <tr><td>Relais</td><td>Quelle antenne, quel secteur, quelle couverture ?</td><td>Point d'antenne, azimut et rayon ne donnent pas une adresse certaine.</td></tr>
+                        <tr><td>Événements d'enquête</td><td>Où situer faits, caméras, perquisitions, témoignages ?</td><td>Vérifier le géocodage ou placer manuellement si l'adresse est approximative.</td></tr>
+                        <tr><td>LAPI / immat.</td><td>Quel véhicule passe à quel point ?</td><td>Ne pas déduire automatiquement conducteur, trajet complet ou présence personnelle.</td></tr>
+                        <tr><td>Extraction / GPS / bancaire</td><td>Quelle source confirme ou nuance la localisation ?</td><td>Différencier précision GPS, transaction, adresse, caméra et BTS.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout"><strong>Réflexe</strong><p>Choisir la donnée selon la question : suspect connu -> FADT MSISDN ; zone de fait -> FADT BTS ; véhicule -> LAPI ; lieu d'enquête -> événement.</p></div>
+        </article>
+
+        <!-- === FICHE 03 === -->
+        <article id="fiche-03" class="content">
+            <h2><i class="fas fa-check-double"></i> FICHE RÉFLEXE 03<br><span>Contrôler avant de cartographier</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Une carte construite sur une donnée mal importée produit une mauvaise lecture.</p></div>
+            <h3 class="section-title">Checklist de contrôle</h3>
+            <div class="card-reflexes"><ul><li>Dates et heures lisibles, formats cohérents, fuseau horaire compris.</li><li>Doublons techniques identifiés ou supprimés si nécessaire.</li><li>Numéros ambigus, MSISDN, IMSI et IMEI contrôlés.</li><li>Relais importés, reconnus et géolocalisés.</li><li>Adresses d'événements géocodées ou repositionnées manuellement.</li><li>Type de donnée clairement identifié : appel, SMS, data, bornage, LAPI, événement, GPS.</li><li>Nommage explicite des dossiers, sous-dossiers, réquisitions et listes de résultats.</li></ul></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Erreur fréquente</th><th>Effet sur la carte</th><th>Correction</th></tr></thead>
+                    <tbody>
+                        <tr><td>Date mal interprétée</td><td>Présence affichée au mauvais moment.</td><td>Reprendre l'import ou le mapping de date.</td></tr>
+                        <tr><td>Relais inconnu</td><td>Événement absent ou mal localisé.</td><td>Importer/gérer les relais depuis le bon menu.</td></tr>
+                        <tr><td>Adresse approximative</td><td>Point d'enquête mal positionné.</td><td>Vérifier sur fond de carte ou positionner manuellement.</td></tr>
+                        <tr><td>Doublon technique</td><td>Densité artificiellement gonflée.</td><td>Auditer puis supprimer ou neutraliser les doublons.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+
+        <!-- === FICHE 04 === -->
+        <article id="fiche-04" class="content">
+            <h2><i class="fas fa-map-location-dot"></i> FICHE RÉFLEXE 04<br><span>Afficher une sélection sur la carte</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La carte se construit à partir d'une sélection, pas en déversant tout le dossier.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Point d'entrée</div><div class="kv-value">Feuille de résultat, menu contextuel, menu pop-up ou représentation cartographique selon l'objet sélectionné.</div></div>
+                <div class="kv-row"><div class="kv-key">Sélection type</div><div class="kv-value">Un numéro, une réquisition, plusieurs réquisitions, un relais, une liste, des événements ou des lignes de résultat.</div></div>
+                <div class="kv-row"><div class="kv-key">But</div><div class="kv-value">Obtenir une vue lisible pour comprendre les zones, puis enrichir l'affichage par couches successives.</div></div>
+            </div>
+            <h3 class="section-title">Étapes réflexes</h3>
+            <div class="card-reflexes"><ol><li>Sélectionner l'objet à cartographier.</li><li>Afficher sur la carte ou lancer la représentation cartographique adaptée.</li><li>Vérifier le fond de carte et les couches visibles.</li><li>Cliquer sur quelques points pour comparer la fiche détaillée avec les lignes source.</li><li>Ajouter seulement les données nécessaires au raisonnement.</li></ol></div>
+            <div class="callout"><strong>À éviter</strong><p>Afficher tout le dossier d'un coup : la carte devient illisible et favorise les conclusions rapides mais fragiles.</p></div>
+        </article>
+
+        <!-- =========================================================
+             LOCALISER
+             ========================================================= -->
+
+        <!-- === FICHE 05 === -->
+        <article id="fiche-05" class="content">
+            <h2><i class="fas fa-tower-cell"></i> FICHE RÉFLEXE 05<br><span>Lire une localisation téléphonique</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>BTS ne veut pas dire position exacte.</p></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Élément affiché</th><th>Lecture correcte</th><th>Formulation prudente</th></tr></thead>
+                    <tbody>
+                        <tr><td>Point antenne</td><td>Antenne rattachée à l'événement.</td><td>Le terminal est raccordé à cette BTS.</td></tr>
+                        <tr><td>Secteur / azimut</td><td>Direction théorique de couverture.</td><td>La présence est compatible avec le secteur couvert.</td></tr>
+                        <tr><td>Rayon estimé</td><td>Zone approximative, variable selon le contexte.</td><td>Le terminal se situe dans une zone de couverture estimée.</td></tr>
+                        <tr><td>Milieu urbain</td><td>Précision souvent meilleure mais jamais absolue.</td><td>La localisation reste une zone, pas une adresse.</td></tr>
+                        <tr><td>Milieu rural</td><td>Couverture potentiellement très large.</td><td>La BTS indique un secteur large, à relativiser fortement.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3 class="section-title">Vigilances</h3>
+            <div class="card-reflexes"><ul><li>Ne pas confondre BTS, GPS, LAPI et adresse d'événement.</li><li>Vérifier le secteur de couverture, pas seulement le point d'antenne.</li><li>Tenir compte du relief, de la densité urbaine, du réseau et du type d'événement.</li><li>Ne jamais conclure seul à la présence physique d'une personne à une adresse précise.</li></ul></div>
+            <div class="callout"><strong>Phrase utile</strong><p>Dire : 'le terminal borne sur la BTS couvrant le secteur...' plutôt que : 'la personne est à cet endroit'.</p></div>
+        </article>
+
+        <!-- === FICHE 06 === -->
+        <article id="fiche-06" class="content">
+            <h2><i class="fas fa-location-dot"></i> FICHE RÉFLEXE 06<br><span>Créer et utiliser les événements d'enquête</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Les faits d'enquête donnent des repères à la carte.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Événements utiles</div><div class="kv-value">Fait principal, lieu de découverte, caméra, perquisition, observation, contrôle, témoignage localisé, point LAPI connu.</div></div>
+                <div class="kv-row"><div class="kv-key">Création</div><div class="kv-value">Création manuelle ou import selon le cas ; géocodage automatique si adresse exploitable, positionnement manuel si besoin.</div></div>
+                <div class="kv-row"><div class="kv-key">Intérêt</div><div class="kv-value">Comparer le fait et les données techniques dans une même vue : proximité, cohérence, zone à vérifier.</div></div>
+            </div>
+            <h3 class="section-title">Réflexe d'utilisation</h3>
+            <div class="card-reflexes"><ol><li>Nommer l'événement de manière explicite : nature, date, heure ou contexte.</li><li>Vérifier le point sur le fond de carte le plus adapté.</li><li>Distinguer visuellement les événements d'enquête des données téléphoniques.</li><li>Utiliser l'événement comme point de départ d'une recherche à proximité.</li></ol></div>
+            <div class="callout"><strong>Contrôle</strong><p>Un événement mal placé peut déformer toute l'analyse de proximité. La vérification visuelle du point est indispensable.</p></div>
+        </article>
+
+        <!-- =========================================================
+             ANALYSER
+             ========================================================= -->
+
+        <!-- === FICHE 07 === -->
+        <article id="fiche-07" class="content">
+            <h2><i class="fas fa-clock"></i> FICHE RÉFLEXE 07<br><span>Utiliser la timeline avec la carte</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La timeline donne une lecture temporelle à ce que la carte localise.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Relier les événements cartographiques à leur ordre chronologique pour comprendre quand une présence, un mouvement ou une concentration apparaît.</div></div>
+                <div class="kv-row"><div class="kv-key">Quand l'utiliser</div><div class="kv-value">Dès que l'analyse dépend d'une période, d'une plage horaire, d'un enchaînement d'événements ou d'une comparaison avant / pendant / après le fait.</div></div>
+                <div class="kv-row"><div class="kv-key">Principe</div><div class="kv-value">La timeline fonctionne en miroir de la carte : sélectionner une période met à jour l'affichage cartographique, et cliquer sur un événement de la carte permet de le repositionner dans la chronologie.</div></div>
+            </div>
+            <h3 class="section-title">Étapes réflexes</h3>
+            <div class="card-reflexes"><ol><li>Afficher d'abord une vue cartographique lisible : sources utiles, couches nécessaires et période globale contrôlée.</li><li>Ouvrir la timeline ou la chronologie associée à la vue.</li><li>Resserrer progressivement la fenêtre temporelle : toute la période, journée utile, heures autour du fait, puis créneau précis.</li><li>Observer ce qui disparaît, ce qui reste et ce qui se concentre sur la carte.</li><li>Comparer les points conservés avec le tableau de résultats pour vérifier les lignes source.</li><li>Sauvegarder la sélection ou les critères de filtre si le résultat doit être restitué.</li></ol></div>
+            <div class="callout"><strong>Requêtes croisées</strong><p>Carte, tableau et chronologie doivent être lus ensemble : filtrer sur la carte, vérifier les lignes dans le tableau, puis resserrer la plage horaire pour confirmer la cohérence temporelle.</p></div>
+            <h3 class="section-title">Exemples d'usage</h3>
+            <div class="card-reflexes"><ul><li>Isoler les numéros présents entre 02h et 03h autour d'une BTS couvrant le lieu du fait.</li><li>Repérer si un cluster cartographique correspond à un rassemblement sur une plage horaire précise.</li><li>Comparer les appels d'un suspect avec la chronologie des événements et les autres sources géolocalisées.</li></ul></div>
+            <h3 class="section-title">Vigilances</h3>
+            <div class="card-reflexes"><ul><li>Contrôler les dates, heures, formats et fuseaux horaires avant toute conclusion.</li><li>Ne pas confondre simultanéité technique et présence physique certaine.</li><li>Documenter les filtres temporels appliqués pour que l'analyse soit reproductible.</li></ul></div>
+            <div class="callout"><strong>Formulation prudente</strong><p>Dire : 'sur cette plage horaire, les données affichées se concentrent dans ce secteur' plutôt que : 'les personnes étaient ensemble à cet endroit'.</p></div>
+            <div class="callout"><strong>Dernier réflexe</strong><p>Une carte dit où ; la timeline aide à comprendre quand. Les deux lectures doivent rester liées aux données source.</p></div>
+        </article>
+
+        <!-- === FICHE 08 === -->
+        <article id="fiche-08" class="content">
+            <h2><i class="fas fa-map"></i> FICHE RÉFLEXE 08<br><span>Exploiter les couches et fonds de carte</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Le fond de carte influence ce que l'on comprend.</p></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Choix</th><th>Utilisation</th><th>Ce que cela apporte</th></tr></thead>
+                    <tbody>
+                        <tr><td>OpenStreetMap</td><td>Lecture des rues, quartiers, axes, adresses.</td><td>Très lisible pour expliquer un secteur.</td></tr>
+                        <tr><td>Satellite</td><td>Lecture physique des lieux : parkings, friches, bâtiments, terrains.</td><td>Utile pour qualifier le contexte concret.</td></tr>
+                        <tr><td>Relais / secteurs</td><td>Lecture technique des BTS et couvertures.</td><td>Indispensable pour interpréter les localisations télécoms.</td></tr>
+                        <tr><td>Événements</td><td>Repères judiciaires ou opérationnels.</td><td>Permet de relier la donnée technique au dossier.</td></tr>
+                        <tr><td>LAPI / immat.</td><td>Points caméra et passages véhicules.</td><td>Ajoute une lecture véhicule à la carte.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="callout"><strong>Bon réflexe</strong><p>Changer de fond de carte quand l'interprétation du lieu le justifie.</p><p>Afficher les couches une par une pour garder une lecture claire.</p><p>Conserver la lisibilité : couleurs distinctes, couches utiles, pas de surcharge.</p></div>
+        </article>
+
+        <!-- === FICHE 09 === -->
+        <article id="fiche-09" class="content">
+            <h2><i class="fas fa-crosshairs"></i> FICHE RÉFLEXE 09<br><span>Rechercher dans une zone ou à proximité</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Partir d'un point ou d'un secteur pour trouver les éléments proches.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Question</div><div class="kv-value">Quels éléments de la procédure sont proches de ce lieu, de ce relais, de cette caméra, de cette adresse ou de cette zone ?</div></div>
+                <div class="kv-row"><div class="kv-key">Objets recherchés</div><div class="kv-value">Téléphonie, événements, identités, relais, immatriculations, LAPI ou autres données géolocalisées selon le dossier.</div></div>
+                <div class="kv-row"><div class="kv-key">Usage typique</div><div class="kv-value">Lieu de fait, caméra, point de passage, zone de rendez-vous probable, secteur d'activité inhabituel.</div></div>
+            </div>
+            <h3 class="section-title">Étapes</h3>
+            <div class="card-reflexes"><ol><li>Choisir le point de départ : événement, sélection sur carte, relais, LAPI ou adresse.</li><li>Définir une distance cohérente avec le contexte.</li><li>Lancer la recherche à proximité.</li><li>Classer les résultats : connus, inconnus, récurrents, atypiques, à vérifier.</li><li>Sauvegarder les résultats intéressants dans une liste ou une réquisition de résultat.</li></ol></div>
+            <div class="callout"><strong>Point de vigilance</strong><p>La distance choisie doit être justifiable : elle n'a pas le même sens en centre-ville, zone rurale, autoroute ou secteur dense en BTS.</p></div>
+        </article>
+
+        <!-- === FICHE 10 === -->
+        <article id="fiche-10" class="content">
+            <h2><i class="fas fa-fire"></i> FICHE RÉFLEXE 10<br><span>Utiliser heat map et agrégation par zone</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Faire ressortir les zones d'activité sans lire chaque ligne.</p></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Fonction</th><th>Question</th><th>Lecture</th></tr></thead>
+                    <tbody>
+                        <tr><td>Heat map</td><td>Où l'activité est-elle la plus dense ?</td><td>Zones de vie, travail, passage, stationnement ou anomalie.</td></tr>
+                        <tr><td>Agrégation par zone</td><td>Quels secteurs concentrent les événements ?</td><td>Comparaison plus structurée entre zones.</td></tr>
+                        <tr><td>Fréquences</td><td>Quels relais, numéros ou zones reviennent le plus ?</td><td>Distinguer habitude, passage isolé et comportement atypique.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3 class="section-title">À utiliser pour</h3>
+            <div class="card-reflexes"><ul><li>Étudier les habitudes géographiques d'une victime, d'un suspect ou d'un groupe.</li><li>Repérer une zone inhabituelle par rapport au profil habituel.</li><li>Identifier des secteurs utiles pour vidéosurveillance, LAPI, témoignages ou surveillances.</li><li>Comparer plusieurs réquisitions ou ensembles de réquisitions.</li></ul></div>
+            <div class="callout"><strong>Formulation</strong><p>Une zone chaude indique une densité d'activité dans les données affichées. Elle suggère un centre d'intérêt ; elle ne prouve pas à elle seule un domicile ou un lieu de travail.</p></div>
+        </article>
+
+        <!-- === FICHE 11 === -->
+        <article id="fiche-11" class="content">
+            <h2><i class="fas fa-people-arrows"></i> FICHE RÉFLEXE 11<br><span>Chercher les points de rencontre ou d'éloignement</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Comparer des réquisitions dans l'espace, avec une contrainte de proximité.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Objectif</div><div class="kv-value">Déterminer si des éléments de plusieurs réquisitions ont pu se trouver au même endroit ou dans des endroits différents selon une distance définie.</div></div>
+                <div class="kv-row"><div class="kv-key">Fonction simple</div><div class="kv-value">Comparer deux ou plusieurs réquisitions ; résultat centre sur le meilleur point.</div></div>
+                <div class="kv-row"><div class="kv-key">Fonction avancée</div><div class="kv-value">Comparer des ensembles de réquisitions, prendre en compte le rôle et obtenir tous les points ou les meilleurs points.</div></div>
+            </div>
+            <h3 class="section-title">Paramètres à expliciter</h3>
+            <div class="card-reflexes"><ul><li>Réquisitions ou ensembles comparés.</li><li>Distance inférieure à... pour une hypothèse de rencontre.</li><li>Distance supérieure à... pour une hypothèse d'éloignement.</li><li>Rôle éventuel : abonné, correspondant ou autre selon la donnée.</li><li>Type de résultat : tous les points ou meilleurs points.</li></ul></div>
+            <div class="callout"><strong>Restitution prudente</strong><p>Un point de rencontre indique une compatibilité géographique entre données. Il doit être recoupé avec les appels, les identités, les événements et les autres sources.</p></div>
+        </article>
+
+        <!-- === FICHE 12 === -->
+        <article id="fiche-12" class="content">
+            <h2><i class="fas fa-code-branch"></i> FICHE RÉFLEXE 12<br><span>Croiser plusieurs sources</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>La force de Mercure vient de la superposition des données.</p></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Croisement</th><th>Intérêt</th><th>Question à poser</th></tr></thead>
+                    <tbody>
+                        <tr><td>FADT MSISDN + FADT BTS</td><td>Mettre un suspect connu dans la masse des présents.</td><td>Le numéro connu apparaît-il dans la zone utile ?</td></tr>
+                        <tr><td>Téléphonie + événement</td><td>Comparer un fait et un rattachement télécom.</td><td>La présence technique est-elle compatible avec le lieu ?</td></tr>
+                        <tr><td>Téléphonie + LAPI</td><td>Recouper terminal et véhicule.</td><td>Le passage véhicule et le bornage se renforcent-ils ?</td></tr>
+                        <tr><td>Téléphonie + extraction</td><td>Élargir aux contacts et données du terminal.</td><td>Des numéros inconnus ressortent-ils dans la même zone ?</td></tr>
+                        <tr><td>Carte + graphe</td><td>Passer de la zone au réseau.</td><td>Les présents dans la zone sont-ils en lien entre eux ?</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <h3 class="section-title">Réflexe d'analyse</h3>
+            <div class="card-reflexes"><ol><li>Superposer peu de sources à la fois.</li><li>Attribuer une couleur ou une lecture claire à chaque source.</li><li>Comparer les points de convergence et les contradictions.</li><li>Documenter le chemin qui a mené au résultat.</li></ol></div>
+        </article>
+
+        <!-- =========================================================
+             RESTITUER
+             ========================================================= -->
+
+        <!-- === FICHE 13 === -->
+        <article id="fiche-13" class="content">
+            <h2><i class="fas fa-file-export"></i> FICHE RÉFLEXE 13<br><span>Sauvegarder et restituer les résultats</span></h2>
+            <div class="card-objectif"><h3><i class="fas fa-bullseye"></i> Idée clé</h3><p>Une bonne carte doit pouvoir être expliquée, reproduite et contredite.</p></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Sauvegarder des identifiants</div><div class="kv-value">Créer une liste dans un dossier de résultats d'analyse ; nommer clairement la liste.</div></div>
+                <div class="kv-row"><div class="kv-key">Sauvegarder des lignes</div><div class="kv-value">Créer une réquisition de résultat ou copier les lignes utiles selon le type de donnée.</div></div>
+                <div class="kv-row"><div class="kv-key">Exporter</div><div class="kv-value">Selon le besoin : rapport, image, tableur, KML, Shapefile ou autre export disponible.</div></div>
+            </div>
+            <h3 class="section-title">À faire apparaître dans une restitution</h3>
+            <div class="card-reflexes"><ul><li>Source des données et réquisitions concernées.</li><li>Zone géographique et distance retenues.</li><li>Filtres appliqués et critères de sélection.</li><li>Mode de représentation utilisé : localisation, recherche à proximité, heat map, agrégation, point de rencontre.</li><li>Niveau de précision : BTS, secteur, rayon, GPS, LAPI, adresse ou événement manuel.</li><li>Limites connues : données manquantes, relais inconnus, doublons, géocodage, numérotation ambiguë.</li></ul></div>
+            <div class="kv-grid">
+                <div class="kv-row"><div class="kv-key">Dire</div><div class="kv-value">Ne pas dire</div></div>
+                <div class="kv-row"><div class="kv-key">Le terminal est raccordé à la BTS couvrant le secteur.</div><div class="kv-value">La personne était exactement à cette adresse.</div></div>
+                <div class="kv-row"><div class="kv-key">Les données font apparaître une zone d'activité récurrente.</div><div class="kv-value">La carte prouve le domicile.</div></div>
+                <div class="kv-row"><div class="kv-key">Les résultats suggèrent une co-présence à vérifier.</div><div class="kv-value">Les personnes étaient ensemble.</div></div>
+                <div class="kv-row"><div class="kv-key">Le passage LAPI recoupe la présence télécom dans le secteur.</div><div class="kv-value">Le titulaire conduisait nécessairement le véhicule.</div></div>
+            </div>
+            <div class="callout"><strong>Dernier réflexe</strong><p>Toujours relier la carte à la donnée source et à une formulation proportionnée au niveau de précision.</p></div>
+        </article>
+
+    </div><!-- /container -->
+
+    <!-- ========== BOUTON RETOUR EN HAUT ========== -->
+    <button id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
     <script>
+        /**
+         * Affiche le panneau de contenu correspondant à l'index.
+         * @param {number} index - 0 = Introduction, 1..13 = Fiches
+         */
         function showTab(index) {
             const contents = document.querySelectorAll('.content');
             contents.forEach(content => content.classList.remove('active'));
@@ -290,6 +620,11 @@
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        /**
+         * Bascule l'affichage des sous-onglets d'un groupe.
+         * @param {HTMLElement} header - Le bouton .group-header cliqué
+         */
         function toggleGroup(header) {
             const subTabs = header.nextElementSibling;
             const isOpen = subTabs.classList.contains('open');
@@ -300,6 +635,16 @@
                 header.classList.add('expanded');
             }
         }
+
+        /* ========== Afficher/masquer le bouton retour en haut ========== */
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
     </script>
 </body>
 </html>
